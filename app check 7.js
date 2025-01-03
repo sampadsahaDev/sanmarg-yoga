@@ -28,16 +28,7 @@ const reviewers=[
 const reviewsContainer=document.querySelector('.reviews-container');
 reviewsContainer.innerHTML=``;
 
-/*
-reviewsContainer.innerHTML=reviewsContainer.innerHTML+`<div class="review"> 
-                            <h2>${reviewers[0].title}</h2>
-                            <p>${reviewers[0].comment}</p>
-                            <div class="reviewer">
-                              <h4>${reviewers[0].name}</h4>
-                              <p>${reviewers[0].address}</p>
-                           </div>
-                        </div>`;
-*/
+
 // creating multiple review divs
 for(let i=0;i<reviewers.length;i++){
     reviewsContainer.innerHTML=reviewsContainer.innerHTML+`<div class="review"> 
@@ -50,8 +41,6 @@ for(let i=0;i<reviewers.length;i++){
                         </div>`;
 }
 // stacking them in styles check.css
-
-// eta first reviewer sheta last e chole geche solve this
 // first .review div will get the largest z-index
 const reviewDivs=document.querySelectorAll('.review');
 let j=reviewDivs.length-1;
@@ -62,9 +51,6 @@ reviewDivs.forEach(function(reviewDiv){
 });
 
 // annimation part
-
-// app check 6 "to make nicher review ta almost invisible" er part 1
-// start
 // lets reduce the opacity for all the reviewDiv to almost 0
 reviewDivs.forEach(function(reviewDiv){
     reviewDiv.style.opacity=0.1;
@@ -78,27 +64,18 @@ function translateReviews(){
     if(k==reviewDivs.length){
         reviewDivs.forEach(function(reviewDiv){
             reviewDiv.classList.remove('review-translated');
-            // app check 6 "to make nicher review ta almost invisible" part 3A
-            // start
             reviewDiv.style.opacity=0.1;
-            // end
-        });
-        // app check 6- "to make nicher review ta almost invisible" part 3B
-        // start
-        reviewDivs[0].style.opacity=1;
-        // end
 
+        });
+        reviewDivs[0].style.opacity=1;
         k=0;
     }
     else{
         reviewDivs[k].classList.add('review-translated');
-        // app check 6-"to make nicher review ta almost invisible"  er part 2
-        // start
         // reviewDivs[k+1].style.opacity=1;
         if(k+1<reviewDivs.length){
             reviewDivs[k+1].style.opacity=1;
         }
-        // end
         k++;
     }
 }
@@ -107,7 +84,7 @@ function translateReviews(){
 // const setintervalForReviewsId=setInterval(translateReviews,2000);
 const intervalIdReviewsSection=setInterval(translateReviews,2000);//we will need the id of the interval, to stop the interval in #reviews's slider dots functionality - app check 7
 
-// app check 7 starts from here, but here ^ ektu ache
+
 //#reviews section er slider dots functionlity- first thing-we will have no. of slider dots equal to no. of reviewers/reviews
 const sliderDotsContainerOfreviewsSection=document.querySelector('#reviews .slider-dots-container');
 sliderDotsContainerOfreviewsSection.innerHTML=``;
@@ -145,36 +122,6 @@ sliderDotsOfreviewsSection.forEach(function(dot){
 
 //#reviews section er slider dots functionlity- third thing-highlighting the slider dot, during the annimation(a tough thing)
 
-// *****old way-dont need to see
-
-//first one should be selected at the very begining, then 2000ms complete hole first .review ta translated hoye jabe, tokhn amader interval tar o first 2000ms complete hobe and function for highlightinig the slider dot will be called 
-//and second dot ta highlighted hobe 
-//then the interval should start
-/*
-sliderDotsOfreviewsSection[0].classList.add('slider-dot-selected');
-setInterval(sliderDotHighlighter,2000);//note 2:this does not give an error bcz it is asynchorous 2nd complete hoye ccall howar agei let dotNum=1; run hoye geche
-// console.log(dotNum);//note 1:this gives error saying dotNum isnt initilized ofcourse let variable cant be used before delcaration
-let dotNum=1;
-
-function sliderDotHighlighter(){
-    if(dotNum==sliderDotsOfreviewsSection.length+1){//third thing
-        dotNum=0;
-    }//note- this code will make one cycle equals 5 calls not 4
-
-    sliderDotsOfreviewsSection.forEach(function(dot){
-        dot.classList.remove('slider-dot-selected');        
-    });
-
-    if(dotNum!=sliderDotsOfreviewsSection.length){// second thing
-        // first thing
-        sliderDotsOfreviewsSection[dotNum].classList.add('slider-dot-selected');
-    }    
-    dotNum++;
-}
-*/
-
-
-// *****new way
 
 // part -2
 //start
