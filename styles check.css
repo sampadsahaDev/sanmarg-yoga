@@ -1,0 +1,959 @@
+/* revise */
+/* :root{
+    --heading-font-size:32px;
+    --timings-off-white-color:rgb(194, 190, 190);
+    --timings-heading-color:rgb(231, 225, 225);
+    --timings-div-bg-color:rgb(25, 28, 28);
+    --clock-color:rgba(255, 68, 0, 0.717);
+
+    --slider-dots-bg-color:var(rgba(255, 255, 255, 0.563));
+} */
+:root{
+    --join-btn-green:rgb(64, 68, 11);
+    --offwhite:rgba(255, 255, 255, 0.738);
+    --slider-dot-grey:rgba(82, 74, 74, 0.629);
+    --slider-dot-black:#222020c8;
+    --orange:rgb(218, 122, 58);
+    --orange-half-transparent:rgba(218, 122, 58,0.3);
+    /* --nav-toggle-orange: */
+
+
+    --timings-off-white-color:rgb(194, 190, 190);
+    --timings-heading-color:rgb(231, 225, 225);
+    --timings-div-bg-color:rgb(25, 28, 28);
+    --clock-color:rgba(255, 68, 0, 0.717);
+    
+    --slider-dots-bg-color:var(rgba(255, 255, 255, 0.563));
+
+
+}
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+}
+body{
+    width:100%;
+    font-family: sans-serif;
+    text-transform: capitalize;
+
+    /* background-image: linear-gradient(to bottom left, rgba(120, 75, 75,0.5), rgba(255, 192, 152,0.5)) */
+}
+a{
+    text-decoration: none;
+}
+
+/* styling the navbar(navbar and sidebar) */
+.logo-container img{
+    width:100px;
+    height:40px;
+}
+.logo-container button{
+    background-color: transparent;
+    color:rgb(218, 122, 58);
+    border:none;
+    font-size: 30px;
+}
+.logo-container{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
+.navbar{
+    padding:0.5rem 1rem;
+}
+
+/* beautiful background */
+.navbar{
+    background-image: linear-gradient(to bottom, black, rgba(0, 0, 0, 0.244));
+}
+/* hover effect */
+.logo-container img{
+    transition: all 0.5s ease-in;
+}
+.logo-container button{
+    transition: all 0.5s ease-in;
+}
+.logo-container img:hover{
+    transform:scale(1.1) translate(-10px);
+}
+.logo-container button:hover{
+    transform: scale(1.1) rotate(180deg);
+}
+/* fixed position */
+.navbar{
+    position:fixed;
+    z-index:100000;/*because other elements also have their stacking contexts(when we used absolute positon and z-indexes), here position:fixed does create a stacking context*/
+    /* but not necessarily it becomes the top */
+    /* so we have to make it the top by giving highest z-index */
+    width:100%;
+}
+/* sidebar styling */
+aside{
+    position:fixed;
+    z-index:200000;
+    top:0;
+    left:0;
+    width:100%;/*since positioned element*/
+    height:100%;
+    background-color:antiquewhite;/*since the bg img is somnewhat trasnparent jedike transparent the bg color will help*/
+    background-image: url('photos/yoga logo.png');
+    /*background-size: cover;*//*cover will cut the img to maintain the aspect ratio, causing the cutting the image inappropriatly jei jaiga ta dekha dorkar oita toh dekha e jabe na*//*no background repeat will happen here*/
+    background-size: contain;/*background repeat will happen here*/
+    padding:30px 22.5px;
+}
+.sidebar-menu li{/*nav li*/
+    list-style-type: none;
+    margin-bottom:1.5rem;/*we use 1rem margin-right in nav menu for large screen and margin bottom for smaller screen*/
+}
+.sidebar a{/* nav a */
+    color:black;
+    font-size:27px;/*p er size 16px shetar reference e */
+}
+a{
+    text-decoration: none;
+}
+/* a  *//*text decoration*//*already ki ache??*/
+
+/* now sidebar er menu te hover effect  */
+.sidebar a:hover{
+    font-weight:600;
+    font-size:30px;
+}
+.sidebar li:hover{
+    transform: translate(5px);
+    /* tried scale but some problem came */
+}
+/* the problem we will notice is that ekta list item er size boro hole er nicher goli o positon theke sore jacche */
+/* jeta amra chai na, solution is  li or a er height beshi hote hobe */
+.sidebar li{
+    height:40px;
+}
+/* now transiton effect */
+.sidebar a, .sidebar li{
+    /*all 0.3s ease-in-out 0.1s*/
+    transition: all 0.1s ease-in-out;/*not as smooth as sidebar project, not event after adding transition-delay basiclly it didnt work*/
+}
+/* styling the cross btn in the sidebar */
+.cross-btn{
+    border:none;
+    background-color: transparent;
+    /* font-size:30px; */
+    font-size:40px;
+    color:black;
+    transition: transform .5s ease-in-out;
+    margin-bottom:2rem;/*1.5rem margin bottom is used among .sidebar menu er  li*/
+}
+.cross-btn:hover{
+    transform:scale(1.1) rotate(90deg);
+}
+
+/* now for js- lets hide the aside */
+aside{
+    /* display:none; */
+    transform:translate(-120%);
+    transition: all 0.5s ease-in-out;
+}
+.aside-show{
+    /* display:block; */
+    /*which is default for aside*/
+    transform:translate(0%);
+}
+/* so navbar with sidebar is complete */
+/* you can see app common check.js */
+
+/* but we would love to have an extra translation effefct on .sidebar-menu */
+
+/* so make it like this- by default .sidebar-menu will be translated but when the aside is shown make the
+translation of aside-menu go i.e make it 0%*/
+
+.sidebar-menu {
+    transform:translate(-120%);
+    transition: all 0.8s ease-in-out;   
+}
+.sidebar-menu-show {
+    transform:translate(0);
+}
+/* now see app common check 2.js  */
+
+
+ /* ********************/ /* styling the banner */
+.banner{
+    /* background-color: #be723f; */
+    height: 95vh;
+    text-align: center;
+    /* total viewport is 95vh or 100vh for say, 1/3rd is the gap in the top so padding-top would be 33vh */
+    padding-top:30vh;
+
+    position: relative;/*for arrow btns*/
+
+}
+.banner-info{
+    width:70%;/* arrow btn left and right 5% offset*//* and first 80% were given, but to create more gap 70% is given*/
+    margin:0 auto;
+    /* background-color: yellowgreen; */
+
+}
+.banner-info>*{
+    margin-bottom:40px;/*check on phone then decide whether px would be useed or not*/
+}
+.arrow{
+    position: absolute;
+    top:50%;
+}
+.arrow.left-btn{
+    left:5%;
+}
+.arrow.right-btn{
+    right:5%;
+}
+.banner .join-btn{ /*specifity concept will come here, .banner button{} has more specificity it would have been choosen for the same rules*/
+    background-color: var(--join-btn-green);
+    /* font-size:1.25rem; */
+    border:0.2px solid rgba(1, 27, 0, 0.5);
+    border-radius:32px;/*size ?*/
+    padding:8px 20px;/*size ?*/
+    color:var(--offwhite);
+    transition: all 0.1s ease-in;
+}
+.banner .join-btn:hover{ 
+    transform:scale(1.15);/*why the font or text content is increasing in size*/
+    background-color: #000000;
+    border:1px solid #000000;
+}
+
+.slider-dot{
+    background-color: rgba(82, 74, 74, 0.629);/*bcz review section er bg white so dots goli dkha jacchilo na*/
+    background-color:var(--slider-dot-grey) ;
+    display:inline-block;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    margin-right:4px;
+    /* transition-duration:1s ;
+    transition-property: all;
+    transition-timing-function: ease-in; */
+    transition: all 0.1s ease-in;
+}
+.slider-dot:hover{
+    transform:scale(1.5);
+    background-color: var(--slider-dot-black);
+}
+.slider-dots-container{
+    /* text-align:center; */
+    /* no need .banner e text-align apply kora ache */
+    
+    /* background-color: #3fbe89; */
+    /* here you will notice that the join btn er overlapping over the .slider-dots-container
+    reason is- join-btn is an anchor tag thus a inline elemenet, inline element e padding dile emn e hoi padding toh hobe but overlap korbe */
+    /* sol- is below */
+}
+.banner .join-btn{
+     /* sol- is here */
+    display:inline-block;
+    /* now apply the margin */
+    margin-bottom:40px;
+}
+/* background image */
+.banner{
+    background-image: url(photos/online.jpg);
+    background-size: cover;/*default is whatever is the image size, contain may be smaller than the bacground so cover is the perfect*/
+}
+/* overlay */
+
+.banner::before{
+    content:"";
+    display:block;
+    width:100%;
+    height:100%;
+    background-image:linear-gradient(rgba(255, 110, 57, 0.6),rgba(0, 0, 0, 0));
+    position: absolute;
+    top:0;
+    left:0;
+}
+/* now you will see all the texts are blured
+bcz the overlay is applied on top, though it should not
+since ::before pseudo element is the first child, toh baki children of .banner should be on top of it
+but jai hok this is how it is */
+/* now what we shall do-
+use the stacking context
+*/
+/*for that we first need to create a stacking context for the container*/
+.banner{
+    z-index:10;
+}
+/* now we will create another stacking context for ::before, ofcourse it will be inside the .banner container's 
+stacking context cloud and to be precise inside of it, mane .banner stacking context er bhitore dhuke thakbe  */
+.banner::before{
+    z-index:-1;
+}
+/* .banner er stacking context cloud er modhya stacking (mane age overlay ta ashbe naki background naki .banner er children)  arrangemnent ki kore hobe is shown in an image */
+
+
+/* till above app js er kono use hoi ni */
+/* now we have used app check1.js */
+/* and now slider dot e jokhn click korbo tokhn it should be in diff style, shei jonno app check1.js er jonno css likhbo */
+
+.slider-dot-selected{
+    background-color:rgba(25, 23, 23, 0.915);
+    transform:scale(1.5);
+}
+
+
+
+/* **********************/ /* styling the courses */
+/* *****lets first design for big screen */
+section{
+    padding-bottom:30px;/*based on the 40px gap in h1 and p of .banner info in .banner*/
+}/*applies to all the sections*/
+#courses{
+    background-color: #ff914d4d;/*almost transparent orange color*/
+    border:1px solid rgba(0, 0, 0, 0);
+    padding-bottom:75px;/*shb section er khetre padding-bottom is 30px, but here why 75px?
+    courses-container er upore joto gap niche o toto holei e bhalo lagbo*/
+    /* coourses-container er uporer gap =top and bottom margin of heading 30px+30px and font size of heading so total is almost 80px  */
+}
+.courses-headings-container>div{
+    display:none;
+}
+#courses .courses-headings-container h1{
+    color:black;/*bcz #courses color is white*/
+}
+.heading{
+    /* font-size: var(--heading-font-size); */
+    text-align:center;
+    margin:30px 0;/*based on the 40px gap in h1 and p of .banner info in .banner*/
+}/*these rule will be applied to all the headings*/
+
+.courses-container{
+    display:flex;
+    justify-content: center;
+    gap:20px;
+}
+.course{
+    /*??*//* width: 400px; *//*width of a mobile screen*/
+    width: 70%;
+    max-width:300px;
+}
+.course img{
+    width:100%; 
+    height:250px;
+    object-fit: cover;
+}
+.course{
+    border:2px solid var(--orange-half-transparent);
+    background-image: radial-gradient( at 50% 20%, #fff,var(--orange));
+
+    /* ?????*//* for app 13.js *//*i.e js for courses, highlight the course when scroll to a particular course*/
+    /*so when .course-highlighted class added by js, a transition effect would be therer*/
+    /* ?????*/transition: all 0.9s ease-in-out;
+    
+    /* ?????*/color:white; /*so that product.html e applicalble hoi*/
+    /* bcz product.html e .courses element nai tai etar style ta apply hobe na but course toh ache tai etar styles apply hobe */
+
+    color:rgb(0, 0, 0);
+}
+.course h3 {
+    margin: 1rem 0 0 0.5rem;
+}
+.course p {
+    margin: 1.5rem 0 1.5rem 0.5rem;
+}
+.course-btns-container{
+    display:flex;
+    /* justify-content:space-around; */
+    justify-content:space-evenly;
+    margin-bottom:2rem;
+}
+.course-btns-container a{
+    /* border:1.5px solid rgb(0, 0, 0); */
+    border-radius:20px;/*onuman*/
+    padding:10px 20px;/*onuman*/
+
+    font-size: 17.5px;/*almost same as uporer h3   note:default of h3 is 18.72px;*/
+    font-weight: 600;
+    background-color:var(--orange);
+}
+.course-btns-container a{
+    color:white;   
+}
+.course-btns-container a:visited{
+    color:white;
+}
+/* at line no. 10 a{text-transform:none;} is used, so all the a element will have no text-transform*/
+/*  r kon a tag er ki color eta specific rakhlm jemn ekhane white color */
+
+/*now for smaller display  */
+/* start */
+.courses-container{
+    flex-wrap: wrap;
+}
+/* end */
+
+/* the below one is useful in js for courses  */
+/* start */
+.course-highlighted{
+    /* border:2px solid rgb(0, 158, 0); */
+    /* background-color: rgb(188, 75, 0); *//*omited in styles 6*/
+    transform: scale(1.1);
+}
+/* after hightligting Our Courses dhaka pore jai, so */
+.courses-container{
+    margin-top:40px;
+}
+/* .course highlight hole pore boro hoye jai
+ toh adjacent .course er sathe space ekdom kome jai */
+
+.course{
+    margin-bottom:20px;/*gap 20px +margin-bottom 20px =40px*/
+}
+
+/* end */
+
+/* styling timings */
+#timings{
+    background-color: #000000;
+    text-align: center;
+    /* padding-top: 1.25rem; */
+    padding: 1.5rem 0 2.5rem;/*added in styles 6*/
+}
+#timings .heading{
+    /* color:rgb(231, 225, 225); */
+    color:var(--timings-heading-color);
+}
+.timings-container{
+    /* margin-top:2rem; */
+    margin-top:1.5rem;
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    /* justify-content: center; */
+    /* align-content: center; */
+    justify-items:center;/*it defines how the item in the each cell are gonna align*/
+    /* align-items:center; */ /*it wont make any diff omitted in styles 6*/
+    grid-row-gap:10px;
+    /* height:100vh; */
+    /* height:844px; */
+
+
+}
+.timings-container div{
+    /* background-color: rgb(25, 28, 28); */
+    background-color: var(--timings-div-bg-color);
+    color:var(--timings-off-white-color);
+    /* padding:20px 50px; */
+    padding:20px 50px 0;
+    text-align: center;
+    /* line-height: 1.5rem; */
+    border-radius:0.5rem;
+
+    min-height:10.5rem;
+}
+.timings-container p:first-child{
+    /* color:rgba(255, 68, 0, 0.717); */
+    color:var(--clock-color);
+    font-size: 1.75rem;
+}
+
+.timings-container .weekdays{
+    margin:0.75rem;
+    font-size:1.15rem;
+}
+.timings-container p:nth-child(3){
+    margin-bottom:0.35rem;
+}
+/* selector- 'timings-container er p element' */
+/* state- 'which are the nth-child of their parent' */
+
+
+/* styling for the contact */
+#contact{
+    background-color: #000000;
+    /* margin:auto 5.5rem; */
+    padding:1.5rem 0;/*?*/
+    padding-top:1.5rem;/*? this was given to creete a gap btwn img and conctact section, but large screen a layout kintu change hobe
+    */
+    /*font-size: 1rem;*//*see what is font size in reviews and instructors sections*/ 
+    color:rgb(197, 197, 197);
+    /*text-align: center;*/ /* for the image */
+}
+#contact>img{
+    display:block;
+    margin:0 auto;
+    margin-bottom:1rem;
+}
+
+#contact p:nth-child(2){
+    text-align: center;
+
+}
+#contact hr{
+    /* background-color: #fff; */
+    margin:1.5rem 0;
+    width:100%;
+}
+.contact-container{
+    margin:0 1.5rem;
+    display:flex;
+    justify-content: space-between;
+}
+
+.phone,.whatsapp,.email{
+    display: flex;
+}
+.contact-container>*:first-child{
+    flex-basis: 20%;
+}
+iframe{
+    /* width:100%; */
+    border:none;
+}
+.address h3{
+    margin-bottom:.75rem;
+}
+.contact>div{
+    margin-bottom:.75rem;
+}
+.contact>div>a:first-child{
+    margin-right:.5rem;
+}
+
+
+contact a{/*:link omited in style 6*/
+    color:white;
+    text-decoration: none;
+}
+#contact a:visited{
+    color:white;/*for other sections a i.e in general it is kept black with a{color:black;}*/
+}
+/* link onwards */
+social-media-container{
+    margin:.75rem auto 1.5rem;
+}
+contact-details-container{
+    background-color: rgba(133, 0, 0, 0.042);
+    color:white;/*to be inherited by p grand children elements*/
+    
+    /* why .contact-details-container er first div child  ta gap diye start hoi*/
+    /* margin-top:0;
+    padding:0; */
+    /* not working */
+
+
+
+}
+contact-details-container div{/*protita div of contact-details-container will be a flex box*/
+    display:flex;
+    /*justify-content: space-between;*//*first try*/
+    /* justify-content: flex-start; *//*this is default*/
+    text-align: left;
+
+    padding: 0.25rem 0.5rem;
+
+    margin-bottom:0.5rem;
+    background-color: orangered;
+
+    /* why .contact-details-container er first div child  ta gap diye start hoi*/
+    /* margin-top:0; */
+    /* not working */
+
+}
+contact-details-container a{
+    margin-right: 1rem;
+}
+
+
+address p{/*one of the flex item*/
+    /* width:80%; *//**/
+    /* background-color: rgb(192, 195, 255); */
+
+}
+/* problem is .address er a ta, adjacent thake na */
+address a{/*one of the flex item*/
+    /* display:block; *//*kono labh nei*/
+    /* background-color: rgb(192, 195, 255); */
+}
+
+tel p{
+    /* width:80%; *//**/
+    /* background-color: rgb(192, 195, 255); */
+}
+tel a{
+    /* background-color: rgb(192, 195, 255); */
+}
+/* tel works perfectly */
+/*but then why a element of the flexbox is not adjacent to the border?? */
+/* found the sol problem was there the address was the first child of the container
+now when this address div is made the last child inthe html now no such problem-
+now find out the where :first-child were used and edit it */
+
+
+
+
+/******************* styling the reviews */
+
+#reviews .heading{
+    /* already given in #courses section so no need */
+}
+#reviews{
+    height:100vh;    
+    border:1px solid rgba(0, 0, 0, 0);
+    background-image: url('./photos/left.png');
+}
+
+.review{
+    width:75%;
+    max-width:700px;/*for larger screen*/
+    /* height:75vh; */
+    max-height:75vh;/*mane 75vh er theke lamba jeno na hoi, height:75vh dile and review onek choto hole ektu lekha and onek khani white space thakbe*/
+
+    margin:0 auto;
+    padding:30px 25px 30px;
+    /* background-color: #fff; */
+    background-image: radial-gradient(circle at 0% 20%,rgb(255, 251, 243),rgb(255, 251, 243,0.9) 80%,rgba(255, 251, 243, 0.252) 85%);
+    /*radial gradient er kono dorkar nai eta gradient er moto kaj o korche na, it was used in previous styles
+    eta ai style e use korechi only because of the background color ta khb shundor offwhite ashche*/
+}
+.review>p{/*targetting the review paragraph*/
+    margin:20px 0;
+}
+/* ::before ::after */
+.review{
+    position: relative;
+}
+.review::before{
+    content:'';
+    display:block;
+    width:40px;
+    height:40px;
+    background-image: url('./photos/right.png');
+    background-size: cover;/*if we dont give this, the bg-image by default will be size of as it is*/
+    position: absolute;
+    top:-15px;
+    left:-5px;
+}
+.review::after{
+    content:'';
+    display:block;
+    width:40px;
+    height:40px;
+    background-image: url('./photos/left.png');
+    background-size: cover;/*if we dont give this, the bg-image by default will be size of as it is*/
+    position: absolute;
+    bottom:-5px;
+    right:-5px;
+}
+
+/* slider-dots stylling */
+/* slider-dot er styling is done in .banner section */
+
+#reviews .slider-dots-container{
+    text-align: center;/*in #reviews text-align :center #reviews e apply kora hoyechilo tai specifically .slider-dots-container e korte hoi ni*/
+    /* background-color: #be723f; */
+    margin-top:30px;/*same as .banner er .banner-info er h1 and p er gap er moto*/
+}
+
+/* app er samay */
+/* stack the .review divs */
+.reviews-container{
+    position:relative;
+}
+
+.review{
+    position:absolute;
+    /* center them horizontally */
+    left:50%;
+    transform:translate(-50%);
+    top:0;
+}
+/* now we will see something interestng */
+/* start */
+.reviews-container{
+    /* background-color: #90221d81; */
+    /* height:10px; */
+}/*very important- to understand block element's takes full width but the height accoordint to content*/
+ /*and eventhough absolute positioned child(.review) takes parnet's(.reviews-container) width er 75%, parent er bhitor dhukse na positioned child ta*/   
+/* and jehetu .review being an absolute positoned element, out of flow, tai parent er bhitore dhukbe na, toh parent i.e reviews-container er height 0 hoye jabe, and .slider-dots-contianer will become the only child of the .reviews-container
+toh age jemn .review er pore slider dots ashto ekhn r emn hobe na ekhn first ei slider dots chole ashbe*/
+/* etar ekta problem is .slider-dot-container gayeb hoye jacche */
+/* ekhon eI .reviews-container er height more than .review korte hoibo taile e thik hoye jaibo or padding top dite lagbo in .reviews-container jeno slider-dots container ta niche neme jai */
+.reviews-container{/*****/
+    padding-top:75vh;/*why 76vh since the max heihgt a .review can have is 75vh, so slider dot ta konodin .review dia dhaka porbe na*/
+}
+/* end */
+
+
+
+
+
+/* animation */
+.review-translated{
+    transform:translate(120%);
+}
+/* slowing the animation by using transition effect */
+.review{
+    transition:transform 0.5s ease-in;
+}
+
+/* side er overflow hide korte lagbe */
+#reviews{
+    overflow: hidden;
+}
+
+reviews-section{
+    /* height:72.5vh; */
+    height:100vh;/*temp*/
+    /*?*/background-image: url('./photos/left.png');
+    /* repeat bhalo lage in case of large screen, but small screen a does not look good */
+    /*????*/
+    /*?*/background-size:contain;
+    /* use border */
+    border:1px solid black;
+}
+
+review{
+    /* color:rgb(1, 1, 1); */
+    width:75%;
+    /* height:75vh; */
+    max-height:75vh;/*mane 75vh er theke lamba jeno na hoi, height:75vh dile and review onek choto hole ektu lekha and onek khani white space thakbe*/
+    /* margin:30px auto; *//*wont work on absolute*/
+    /* background-color: rgb(255, 251, 243); */
+    /* background-image: radial-gradient(circle at 0% 20%,rgb(255, 251, 243),rgb(255, 251, 243,0.9) 80%,rgba(255, 251, 243, 0.252) 85%); */
+    /* background-color: rgb(193, 116, 39); */
+
+    /* background-color: rgba(236, 71, 11, 0.098); */
+    /* background-image: linear-gradient(rgb(255, 251, 243),rgb(255, 251, 243) 94%,rgba(255, 251, 243, 0) 95%); */
+    background-color: #fff;
+    padding:30px 25px 30px;
+    /* border-radius:20px; */
+
+   /* position: relative;*/ /*for before after*/
+
+    /* height:440px; */
+    /* ???? size fixed dile boro comment hole???? */
+    /* background-color: transparent; */
+
+    /* see- new, now we want reviews to have a page ultano like effect */
+    /* start */
+    /* transform:translate(50%); */
+    /* transition:background-color 0.5s ease-in-out; */
+    position:absolute;
+    /* top:0; *//*eta dile keno jani review gayeb hoye jacche*/
+    left:0;
+    right:0;
+    margin:0 auto;
+    transition:transform 0.5s ease-in;
+}
+reviews-container{
+    display:relative;
+    background-color: rgba(11, 11, 11, 0.016);
+    height:480px;
+    /* background-color: rgba(233, 17, 17, 0.831); */
+    margin:30px 0 20px;
+
+}
+/* .review-container-container{
+    display:relative;
+    background-color: aquamarine;
+    height:400px;
+} */
+
+
+
+
+review-container-sliding-effect{
+    /* transform:translate(0%) !important; */
+    /* background-color: blue !important;; */
+
+}
+    /* app 14 e js ta kora hoyeche */
+
+    /* end */
+
+
+
+review p{
+    font-size:1.15rem;
+}
+
+
+/* .review-container::after{
+    content:'';
+    background-image: url('/photos/left.png');
+    background-size: cover;
+    position: absolute;
+    bottom:-30px;
+    right:-5px;
+    display:block;
+    width:2rem;
+    height:2rem;
+} */
+/* does not look good */
+/* ??? upre na niche quotation */
+
+
+/* slider-dots er styling chilo which is moved near styling for banner- styles 6 */
+
+
+/* *******styling for the instructor */
+#instructors{
+    /* background-color: #f56200; */
+}
+.instructor{
+    width:80%;
+    max-width:400px;
+    /* margin:0 auto; */
+    background-color: white;
+    border-radius: 10px;/*20px which is in course btns beshi hoye jai*/
+}
+.instructor-img{
+    width:150px;
+    height:150px;
+    object-fit: cover;
+}
+/* styling the instructor-img */
+.instructor{
+    position: relative;
+}
+.instructor-img{
+    position: absolute;
+    border-radius: 50%;
+    left:50%;
+    top:0;
+    transform:translate(-50%,-50%);
+}
+/* padding and margin to instructor and its children */
+.instructors-container{
+    border: 1px solid rgba(0, 0, 0, 0);
+    background-color: #ff914d4d;
+}
+.instructor{
+    margin: 75px auto 0;/*75px bcz it is half of instructor-img*/
+    padding-top:75px ;/*half of instructor-img*/
+    padding:75px 20px 0 20px;/*20px same as course*/
+}
+.instructor-name{
+    text-align: center;
+    margin:5px 0 2.5px;
+}
+.instructor-exp{
+    text-align: right;
+    /* background-color: #be723f; */
+}
+.instructor hr{
+    margin-bottom: 5px;
+}
+
+
+#instructors .heading{
+    margin:30px 0;/*same as #courses er heading*/
+}
+.instructors-container{
+    padding:25px 0 50px;
+}
+
+/* styling for the back-to-top-btn */
+.back-to-top-btn{
+    color:white;
+    background-color:var(--join-btn-green);
+    font-size: 22px;
+    /* border-radius: 50%; *//*since ekhn width and height is not same oval shaped hoye jabe*/
+    display:block;
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+
+    padding:4px;
+    /* making it fixed */
+    position:fixed;
+    bottom:50px;
+    right:20px;
+
+    border:3px solid black;
+
+    /* now z-index */
+    /* for more info on kothai kothai z-index/stacking context is used 
+    khata dekho- back-to-top-btn  */
+    z-index:500000;
+}
+
+#contact {
+    background-color: #000; /* Black background */
+    color: rgb(197, 197, 197); /* Off-white text color */
+    padding: 1.5rem 1rem; /* Padding around the section */
+}
+
+/* Logo Styling */
+#contact img {
+    display: block; /* Centers the logo */
+    margin: 0 auto 1rem; /* Centers and adds space below the logo */
+    max-width: 100%; /* Scales properly */
+    height: auto; /* Maintains aspect ratio */
+}
+
+/* Contact Container Layout */
+.contact-container {
+    display: flex; /* Creates a horizontal layout */
+    justify-content: space-between; /* Distributes space evenly */
+    gap: 1.5rem; /* Space between items */
+}
+
+/* Address, Contact Info, and Iframe Styling */
+.contact-container > div {
+    flex: 1; /* Ensures equal width for all items */
+    padding: 1rem; /* Internal spacing for each item */
+}
+
+/* Links Styling */
+.contact-container a {
+    color: #fff; /* White text */
+    text-decoration: none; /* No underline */
+    display: inline-flex; /* Aligns icon and text inline */
+    align-items: center; /* Centers icon and text */
+}
+
+.contact-container a img {
+    margin-right: 0.5rem; /* Adds space between icon and text */
+}
+
+/* Iframe Responsiveness */
+.contact-container .iframe iframe {
+    width: 100%; /* Full width */
+    height: 300px; /* Height for larger screens */
+    border: none; /* Removes border */
+}
+
+/* Media Queries for Responsiveness */
+
+/* For Tablets and Smaller Screens */
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column; /* Stacks items vertically */
+        gap: 2rem; /* Increased gap for better readability */
+    }
+
+    .contact-container > div {
+        text-align: center; /* Centers content for smaller screens */
+    }
+
+    .iframe iframe {
+        height: 250px; /* Adjusted height for smaller screens */
+    }
+}
+
+/* For Mobile Devices */
+@media (max-width: 480px) {
+    #contact {
+        padding: 1rem; /* Reduced padding */
+    }
+
+    .contact-container .address,
+    .contact-container .contact {
+        padding: 0.5rem; /* Reduced internal spacing */
+    }
+
+    .iframe iframe {
+        height: 200px; /* Reduced height for mobile */
+    }
+}
